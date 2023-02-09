@@ -1,4 +1,4 @@
-<div class="page-title">
+<div class="page-title pt-0">
     <div class="row">
         <div class="col-12 col-sm-6">
             <h3>{{ $title }}</h3>

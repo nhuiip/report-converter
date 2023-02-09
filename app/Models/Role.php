@@ -28,20 +28,20 @@ use Spatie\Permission\Traits\HasPermissions;
 class Role extends Model
 {
     use HasPermissions;
-	protected $table = 'roles';
+    protected $table = 'roles';
 
-	protected $fillable = [
-		'name',
-		'guard_name'
-	];
+    protected $fillable = [
+        'name',
+        'guard_name'
+    ];
 
-	public function model_has_roles()
-	{
-		return $this->hasMany(ModelHasRole::class);
-	}
+    public function model_has_roles()
+    {
+        return $this->hasMany(ModelHasRole::class);
+    }
 
-	public function permissions()
-	{
-		return $this->belongsToMany(Permission::class, 'role_has_permissions');
-	}
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'role_has_permissions');
+    }
 }

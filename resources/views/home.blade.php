@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', $title)
 @section('breadcrumb')
-    @include('layouts._breadcrumb', ['breadcrumbs' => $breadcrumbs, 'title' => $title])
+    @include('layouts.component.breadcrumb', ['breadcrumbs' => $breadcrumbs, 'title' => $title])
 @endsection
 @section('content')
     <div class="card">

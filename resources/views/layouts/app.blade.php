@@ -30,6 +30,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/feather-icon.css') }}">
     <!-- Plugins css start-->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/scrollbar.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/datatables.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/sweetalert2.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/prism.css') }}">
     <!-- Plugins css Ends-->
@@ -40,6 +42,10 @@
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.css') }}">
     <style>
+        .label {
+            padding: .2em .6em .3em;
+        }
+
         .sidebar-link.sidebar-title.thisMenu {
             background: rgba(99, 98, 231, 0.5) !important;
             color: white !important;
@@ -48,14 +54,33 @@
         .thisMenu span {
             color: white !important;
         }
+
         .box-layout {
             background-repeat: no-repeat !important;
             background-size: cover !important;
         }
+
+        .dataTables_wrapper table.dataTable td {
+            padding: 0.35rem 0.5rem;
+        }
+
+        .dataTables_wrapper .btn-group button {
+            margin: 0;
+        }
+
+        .dropdown-menu .dropdown-item {
+            opacity: 1 !important;
+        }
+
+        .dropdown-divider {
+            border-top: 0.1rem solid rgba(0, 0, 0, 1);
+        }
+
         body {
             overflow: hidden;
         }
     </style>
+    @yield('css')
 </head>
 
 <body class="box-layout">
@@ -182,16 +207,17 @@
                                         class="sidebar-link sidebar-title @if (Route::is('home')) thisMenu @endif"
                                         href=""><i data-feather="file-text"></i><span>Report
                                         </span></a></li>
-                                <li class="sidebar-list"><a class="sidebar-link sidebar-title @if (Route::is('holidays.*')) thisMenu @endif"
-                                        href="#"><i
-                                            data-feather="aperture"></i><span>Holiday</span></a></li>
+                                <li class="sidebar-list"><a
+                                        class="sidebar-link sidebar-title @if (Route::is('holidays.*')) thisMenu @endif"
+                                        href="#"><i data-feather="aperture"></i><span>Holiday</span></a></li>
                                 <li class="sidebar-list"><a
                                         class="sidebar-link sidebar-title @if (Route::is('settings.*')) thisMenu @endif"
                                         href="">
                                         <i data-feather="settings"></i><span>Setting </span></a></li>
                                 <li class="sidebar-list"><a
-                                        class="sidebar-link sidebar-title @if (Route::is('users.*')) thisMenu @endif"
-                                        href=""><i data-feather="user"></i><span>Account </span></a></li>
+                                        class="sidebar-link sidebar-title @if (Route::is('accounts.*')) thisMenu @endif"
+                                        href="{{ route('accounts.index') }}"><i data-feather="user"></i><span>Account
+                                        </span></a></li>
                             </ul>
                         </div>
                     </nav>
@@ -220,6 +246,7 @@
         </div>
     </div>
     <!-- latest jquery-->
+    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
     <!-- Bootstrap js-->
     <script src="{{ asset('js/bootstrap/bootstrap.bundle.min.js') }}"></script>
@@ -244,8 +271,43 @@
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/sweet-alert/sweetalert.min.js') }}"></script>
+    @include('sweetalert::alert')
+
+
     <!-- login js-->
     <!-- Plugin used-->
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        function fncDelete(e) {
+            let text = $(e).attr('data-text');
+            let form = $(e).attr('data-form');
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, You won't be able to revert this!",
+                icon: "warning",
+                buttons: {
+                    cancel: true,
+                    confirm: {
+                        text: text,
+                        className: 'btn-danger'
+                    },
+                },
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $('#' + form).submit();
+                } else {
+                    swal.close();
+                }
+            });
+        }
+    </script>
+    @yield('javascript')
 </body>
 
 </html>
