@@ -31,6 +31,7 @@ Route::get('/accounts/{id}/resetpassword', [AccountController::class, 'resetpass
 // !data-table
 Route::get('/accounts/jsontable', [AccountController::class, 'jsontable'])->name('accounts.jsontable');
 Route::get('/teams/jsontable', [TeamController::class, 'jsontable'])->name('teams.jsontable');
+Route::get('/holidays/jsontable', [HolidayController::class, 'jsontable'])->name('holidays.jsontable');
 // !resource route
 Route::resource('accounts', AccountController::class);
 Route::resource('teams', TeamController::class);

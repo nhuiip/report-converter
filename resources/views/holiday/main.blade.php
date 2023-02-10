@@ -7,16 +7,8 @@
     <div class="card">
         <div class="card-header pb-0">
             <div class="row">
-                <div class="col-7">
-                    @include('layouts.component.button.create', ['url' => route('accounts.create')])
-                </div>
-                <div class="col-2">
-                    <select id="role" class="form-select" onchange="dataTable.ajax.reload()">
-                        <option value="">Select Role</option>
-                        @foreach ($role as $value)
-                            <option value="{{ $value->name }}">{{ $value->name }}</option>
-                        @endforeach
-                    </select>
+                <div class="col-9">
+                    @include('layouts.component.button.create', ['url' => route('holidays.create')])
                 </div>
                 <div class="col-3">
                     @include('layouts.component.input-query')
@@ -24,12 +16,11 @@
             </div>
         </div>
         <div class="card-body">
-            <table id="dataTable" data-url="{{ route('accounts.jsontable') }}">
+            <table id="dataTable" data-url="{{ route('holidays.jsontable') }}">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Info</th>
-                        <th>Role</th>
+                        <th>Name</th>
                         <th>Created</th>
                         <th>Updated</th>
                         <th></th>
@@ -53,30 +44,18 @@
             dom: 'rtip',
             ajax: {
                 url: $('#dataTable').attr('data-url'),
-                type: "GET",
-                data: function(d) {
-                    d.role = $('#role').val();
-                },
+                type: "GET"
             },
             columnDefs: [{
                     targets: [0],
                     width: '10%',
                 },
                 {
-                    targets: [1],
-                    orderable: false
-                },
-                {
-                    targets: [2],
-                    width: '15%',
-                    orderable: false
-                },
-                {
-                    targets: [3, 4],
+                    targets: [2, 3],
                     width: '15%',
                 },
                 {
-                    targets: [5],
+                    targets: [4],
                     width: '5%',
                     className: 'text-center',
                     orderable: false
@@ -86,10 +65,7 @@
                     data: 'id'
                 },
                 {
-                    data: 'info'
-                },
-                {
-                    data: 'role'
+                    data: 'name'
                 },
                 {
                     data: 'created_at'

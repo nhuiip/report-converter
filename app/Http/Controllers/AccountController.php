@@ -269,10 +269,13 @@ class AccountController extends Controller
             ->editColumn('updated_at', function ($data) {
                 return '<small>' . date('d/m/Y', strtotime($data->updated_at)) . '<br><i class="far fa-clock"></i> ' . date('h:i A', strtotime($data->updated_at)) . '</small>';
             })
+            ->addColumn('info', function ($data) {
+
+                return $data->email.'<br><small>'.$data->name.'</small>';
+            })
             ->addColumn('role', function ($data) {
                 $role = '<span class="label label-dark" style="">' . $data->roles->first()->name . '</span>';
                 return $role;
-                return "";
             })
             ->addColumn('action', function ($data) {
                 $id = $data->id;

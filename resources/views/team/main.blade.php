@@ -78,28 +78,5 @@
                 }
             ]
         });
-
-        function fncAddData(e) {
-            swal({
-                icon: "info",
-                buttons: {
-                    cancel: false,
-                    confirm: "Save",
-                },
-                content: {
-                    element: "input",
-                    attributes: {
-                        placeholder: "Enter team name.",
-                        type: "text"
-                    },
-                },
-            }).then(value => {
-                if (!value) {
-
-                } else {
-                    console.log(value);
-                }
-            })
-        }
     </script>
 @endsection

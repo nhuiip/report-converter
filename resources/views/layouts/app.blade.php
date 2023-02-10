@@ -208,15 +208,17 @@
                                         href=""><i data-feather="file-text"></i><span>Report
                                         </span></a></li>
                                 <li class="sidebar-list"><a
-                                        class="sidebar-link sidebar-title @if (Route::is('holidays.*')) thisMenu @endif"
-                                        href="#"><i data-feather="aperture"></i><span>Holiday</span></a></li>
-                                <li class="sidebar-list"><a
                                         class="sidebar-link sidebar-title @if (Route::is('settings.*')) thisMenu @endif"
                                         href="">
                                         <i data-feather="settings"></i><span>Setting </span></a></li>
                                 <li class="sidebar-list"><a
+                                        class="sidebar-link sidebar-title @if (Route::is('holidays.*')) thisMenu @endif"
+                                        href="{{ route('holidays.index') }}"><i
+                                            data-feather="aperture"></i><span>Holiday</span></a></li>
+                                <li class="sidebar-list"><a
                                         class="sidebar-link sidebar-title @if (Route::is('teams.*')) thisMenu @endif"
-                                        href="{{route('teams.index')}}"><i data-feather="users"></i><span>Team</span></a></li>
+                                        href="{{ route('teams.index') }}"><i
+                                            data-feather="users"></i><span>Team</span></a></li>
                                 <li class="sidebar-list"><a
                                         class="sidebar-link sidebar-title @if (Route::is('accounts.*')) thisMenu @endif"
                                         href="{{ route('accounts.index') }}"><i data-feather="user"></i><span>Account
@@ -274,8 +276,8 @@
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('js/script.js') }}"></script>
-    <script src="{{ asset('js/sweet-alert/sweetalert.min.js') }}"></script>
     @include('sweetalert::alert')
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
     <!-- login js-->
@@ -290,7 +292,7 @@
         function fncDelete(e) {
             let text = $(e).attr('data-text');
             let form = $(e).attr('data-form');
-            swal({
+            let popup = new swal({
                 title: "Are you sure?",
                 text: "Once deleted, You won't be able to revert this!",
                 icon: "warning",
@@ -308,6 +310,7 @@
                     swal.close();
                 }
             });
+            return popup;
         }
     </script>
     @yield('javascript')
