@@ -5,6 +5,7 @@ use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,10 +27,13 @@ Route::get('/', function () {
 Auth::routes();
 // !other route
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/accounts/jsontable', [AccountController::class, 'jsontable'])->name('accounts.jsontable');
 Route::get('/accounts/{id}/resetpassword', [AccountController::class, 'resetpassword'])->name('accounts.resetpassword');
+// !data-table
+Route::get('/accounts/jsontable', [AccountController::class, 'jsontable'])->name('accounts.jsontable');
+Route::get('/teams/jsontable', [TeamController::class, 'jsontable'])->name('teams.jsontable');
 // !resource route
 Route::resource('accounts', AccountController::class);
+Route::resource('teams', TeamController::class);
 Route::resource('holidays', HolidayController::class);
 Route::resource('settings', SettingController::class);
 Route::resource('reports', ReportController::class);

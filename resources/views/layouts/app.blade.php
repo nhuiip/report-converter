@@ -215,6 +215,9 @@
                                         href="">
                                         <i data-feather="settings"></i><span>Setting </span></a></li>
                                 <li class="sidebar-list"><a
+                                        class="sidebar-link sidebar-title @if (Route::is('teams.*')) thisMenu @endif"
+                                        href="{{route('teams.index')}}"><i data-feather="users"></i><span>Team</span></a></li>
+                                <li class="sidebar-list"><a
                                         class="sidebar-link sidebar-title @if (Route::is('accounts.*')) thisMenu @endif"
                                         href="{{ route('accounts.index') }}"><i data-feather="user"></i><span>Account
                                         </span></a></li>
