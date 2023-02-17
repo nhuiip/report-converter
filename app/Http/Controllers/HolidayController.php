@@ -52,12 +52,12 @@ class HolidayController extends Controller
         $this->validate(
             $request,
             [
-                'name' => 'required|max:100',
+                'name' => 'required|max:255',
                 'date' => 'required',
             ],
             [
                 'name.required' => 'Please enter name',
-                'name.max' => 'Name cannot be longer than 100 characters.',
+                'name.max' => 'Name cannot be longer than 255 characters.',
                 'date.required' => 'Please enter date',
             ]
         );
@@ -110,12 +110,12 @@ class HolidayController extends Controller
         $this->validate(
             $request,
             [
-                'name' => 'required|max:100',
+                'name' => 'required|max:255',
                 'date' => 'required',
             ],
             [
                 'name.required' => 'Please enter name',
-                'name.max' => 'Name cannot be longer than 100 characters.',
+                'name.max' => 'Name cannot be longer than 255 characters.',
                 'date.required' => 'Please enter date',
             ]
         );
@@ -148,8 +148,11 @@ class HolidayController extends Controller
         $search = $request->get('search');
         $order = $request->get('order');
 
+        $year = $request->get('year');
+
         $columnorder = array(
             'id',
+            'date',
             'name',
             'created_at',
             'updated_at',
@@ -169,6 +172,9 @@ class HolidayController extends Controller
         $data = Holiday::when($keyword, function ($query, $keyword) {
             return $query->where('name', 'LIKE', '%' . $keyword . '%');
         })
+            ->when($year, function ($query, $year) {
+                return $query->whereYear('date', $year);
+            })
             ->offset($start)
             ->limit($length)
             ->orderBy($sort, $dir)
@@ -178,10 +184,16 @@ class HolidayController extends Controller
             ->when($keyword, function ($query, $keyword) {
                 return $query->where('name', 'LIKE', '%' . $keyword . '%');
             })
+            ->when($year, function ($query, $year) {
+                return $query->whereYear('date', $year);
+            })
             ->count();
         $resp = DataTables::of($data)
             ->editColumn('id', function ($data) {
                 return str_pad($data->id, 5, "0", STR_PAD_LEFT);
+            })
+            ->editColumn('date', function ($data) {
+                return  date('Y/m/d', strtotime($data->date));
             })
             ->editColumn('created_at', function ($data) {
                 return '<small>' . date('d/m/Y', strtotime($data->created_at)) . '<br><i class="far fa-clock"></i> ' . date('h:i A', strtotime($data->created_at)) . '</small>';

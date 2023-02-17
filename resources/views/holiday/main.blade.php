@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('title', $title)
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/vendors/yearpicker.css') }}">
+@endsection
 @section('breadcrumb')
     @include('layouts.component.breadcrumb', ['breadcrumbs' => $breadcrumbs, 'title' => $title])
 @endsection
@@ -7,8 +10,11 @@
     <div class="card">
         <div class="card-header pb-0">
             <div class="row">
-                <div class="col-9">
+                <div class="col-7">
                     @include('layouts.component.button.create', ['url' => route('holidays.create')])
+                </div>
+                <div class="col-2">
+                    <input id="year" type="text" class="form-control yearPicker" placeholder="Select Year" onchange="dataTable.ajax.reload()">
                 </div>
                 <div class="col-3">
                     @include('layouts.component.input-query')
@@ -20,7 +26,8 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Datail</th>
                         <th>Created</th>
                         <th>Updated</th>
                         <th></th>
@@ -35,6 +42,7 @@
 @endsection
 @section('javascript')
     <script src="{{ asset('js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/yearpicker.js') }}"></script>
     <script>
         let dataTable = $('#dataTable').DataTable({
             responsive: true,
@@ -44,18 +52,21 @@
             dom: 'rtip',
             ajax: {
                 url: $('#dataTable').attr('data-url'),
-                type: "GET"
+                type: "GET",
+                data: function(d) {
+                    d.year = $('#year').val();
+                },
             },
             columnDefs: [{
-                    targets: [0],
+                    targets: [0, 1],
                     width: '10%',
                 },
                 {
-                    targets: [2, 3],
+                    targets: [3, 4],
                     width: '15%',
                 },
                 {
-                    targets: [4],
+                    targets: [5],
                     width: '5%',
                     className: 'text-center',
                     orderable: false
@@ -63,6 +74,9 @@
             ],
             columns: [{
                     data: 'id'
+                },
+                {
+                    data: 'date'
                 },
                 {
                     data: 'name'
@@ -78,5 +92,7 @@
                 }
             ]
         });
+
+        $(".yearPicker").yearpicker()
     </script>
 @endsection
