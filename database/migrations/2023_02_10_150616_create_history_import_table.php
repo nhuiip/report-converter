@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('history_import', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('importBy')->unsigned()->comment('assignee');
+            $table->foreign('importBy')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
-            $table->int('total');
-            $table->int('success');
-            $table->int('fail');
+            $table->integer('total');
+            $table->integer('success');
+            $table->integer('fail');
             $table->string('rawUrl');
             $table->string('successUrl')->nullable();
             $table->string('failUrl')->nullable();

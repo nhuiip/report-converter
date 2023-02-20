@@ -13,9 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('history_log', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('histories', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -27,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('history_log');
+        Schema::table('histories', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,9 +32,10 @@ Route::get('/accounts/{id}/resetpassword', [AccountController::class, 'resetpass
 Route::get('/accounts/jsontable', [AccountController::class, 'jsontable'])->name('accounts.jsontable');
 Route::get('/teams/jsontable', [TeamController::class, 'jsontable'])->name('teams.jsontable');
 Route::get('/holidays/jsontable', [HolidayController::class, 'jsontable'])->name('holidays.jsontable');
+Route::get('/histories/jsontable', [HistoryController::class, 'jsontable'])->name('histories.jsontable');
 // !resource route
 Route::resource('accounts', AccountController::class);
 Route::resource('teams', TeamController::class);
 Route::resource('holidays', HolidayController::class);
-Route::resource('settings', SettingController::class);
+Route::resource('histories', HistoryController::class);
 Route::resource('reports', ReportController::class);

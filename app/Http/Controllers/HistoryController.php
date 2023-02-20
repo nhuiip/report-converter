@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use Illuminate\Http\Request;
 
-class SettingController extends Controller
+class HistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,14 @@ class SettingController extends Controller
      */
     public function index()
     {
-        //
+        $breadcrumbs = [
+            ['route' => '', 'name' => 'History'],
+        ];
+        return view('history.main', [
+            'title' => 'History',
+            'breadcrumbs' => $breadcrumbs,
+            'type' => History::type
+        ]);
     }
 
     /**

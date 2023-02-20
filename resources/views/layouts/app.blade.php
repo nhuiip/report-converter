@@ -208,9 +208,9 @@
                                         href=""><i data-feather="file-text"></i><span>Report
                                         </span></a></li>
                                 <li class="sidebar-list"><a
-                                        class="sidebar-link sidebar-title @if (Route::is('settings.*')) thisMenu @endif"
-                                        href="">
-                                        <i data-feather="settings"></i><span>Setting </span></a></li>
+                                        class="sidebar-link sidebar-title @if (Route::is('histories.*')) thisMenu @endif"
+                                        href="{{ route('histories.index')}}">
+                                        <i data-feather="list"></i><span>History </span></a></li>
                                 <li class="sidebar-list"><a
                                         class="sidebar-link sidebar-title @if (Route::is('holidays.*')) thisMenu @endif"
                                         href="{{ route('holidays.index') }}"><i

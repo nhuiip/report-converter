@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('histories', function (Blueprint $table) {
+        Schema::create('histories_log', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('historyId')->unsigned()->comment('assignee');
+            $table->foreign('historyId')->references('id')->on('histories')->onDelete('cascade');
+            $table->bigInteger('importId')->unsigned()->comment('assignee');
+            $table->foreign('importId')->references('id')->on('histories_import')->onDelete('cascade');
             $table->bigInteger('userId')->unsigned()->comment('assignee');
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->integer('reference')->comment('issueKey');
@@ -40,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('histories');
+        Schema::dropIfExists('histories_log');
     }
 };
