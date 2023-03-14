@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Team;
+use App\Models\TeamMapping;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -92,7 +93,7 @@ class TeamController extends Controller
         return view('team.form', [
             'title' => 'Edit Account',
             'breadcrumbs' => $breadcrumbs,
-            'data' =>Team::findOrFail($id)
+            'data' => Team::findOrFail($id)
         ]);
     }
 
@@ -144,6 +145,9 @@ class TeamController extends Controller
         $search = $request->get('search');
         $order = $request->get('order');
 
+        $displayType = $request->get('displayType');
+        $userId = $request->get('userId');
+
         $columnorder = array(
             'id',
             'name',
@@ -162,13 +166,21 @@ class TeamController extends Controller
         // query
         $keyword = trim($search['value']);
 
-        $data = Team::when($keyword, function ($query, $keyword) {
-            return $query->where('name', 'LIKE', '%' . $keyword . '%');
-        })
-            ->offset($start)
-            ->limit($length)
-            ->orderBy($sort, $dir)
-            ->get();
+        if ($displayType != 'inModal') {
+            $data = Team::when($keyword, function ($query, $keyword) {
+                return $query->where('name', 'LIKE', '%' . $keyword . '%');
+            })
+                ->offset($start)
+                ->limit($length)
+                ->orderBy($sort, $dir)
+                ->get();
+        } else {
+            $data = Team::when($keyword, function ($query, $keyword) {
+                return $query->where('name', 'LIKE', '%' . $keyword . '%');
+            })
+                ->orderBy($sort, $dir)
+                ->get();
+        }
         $recordsTotal = Team::select('id')->count();
         $recordsFiltered = Team::select('id')
             ->when($keyword, function ($query, $keyword) {
@@ -185,9 +197,23 @@ class TeamController extends Controller
             ->editColumn('updated_at', function ($data) {
                 return '<small>' . date('d/m/Y', strtotime($data->updated_at)) . '<br><i class="far fa-clock"></i> ' . date('h:i A', strtotime($data->updated_at)) . '</small>';
             })
-            ->addColumn('action', function ($data) {
+            ->addColumn('action', function ($data) use ($displayType, $userId) {
                 $id = $data->id;
-                return view('team._action', compact('id'));
+                switch ($displayType) {
+                    case 'inModal':
+                        $assign = false;
+                        $mappingId = 0;
+                        if (!empty($userId)) {
+                            $mapping = TeamMapping::where(['teamId' => $data->id, 'userId' => $userId])->first();
+                            $assign = $mapping == null ?? true;
+                            $mappingId = $mapping != null ? $mapping->id : 0;
+                        }
+                        return view('account._actionModal', compact('id', 'assign', 'userId', 'mappingId'));
+                        break;
+                    default:
+                        return view('team._action', compact('id'));
+                        break;
+                }
             })
             ->setTotalRecords($recordsTotal)
             ->setFilteredRecords($recordsFiltered)

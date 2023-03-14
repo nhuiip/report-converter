@@ -44,7 +44,10 @@
             dom: 'rtip',
             ajax: {
                 url: $('#dataTable').attr('data-url'),
-                type: "GET"
+                type: "GET",
+                data: function(d) {
+                    d.displayType = 'mainPage'
+                },
             },
             columnDefs: [{
                     targets: [0],

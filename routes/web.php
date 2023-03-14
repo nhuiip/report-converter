@@ -6,6 +6,7 @@ use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TeamMappingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,7 @@ Route::get('/histories/jsontable', [HistoryController::class, 'jsontable'])->nam
 // !resource route
 Route::resource('accounts', AccountController::class);
 Route::resource('teams', TeamController::class);
+Route::resource('teammapping', TeamMappingController::class);
 Route::resource('holidays', HolidayController::class);
 Route::resource('histories', HistoryController::class);
 Route::resource('reports', ReportController::class);
