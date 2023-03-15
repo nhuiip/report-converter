@@ -30,15 +30,18 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/feather-icon.css') }}">
     <!-- Plugins css start-->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/scrollbar.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/date-picker.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/owlcarousel.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/prism.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/whether-icon.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/datatables.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/sweetalert2.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/animate.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/prism.css') }}">
     <!-- Plugins css Ends-->
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendors/bootstrap.css') }}">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+    <link id="color" rel="stylesheet" href="{{ asset('css/color-1.css') }}" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.css') }}">
     <style>
@@ -205,11 +208,11 @@
                                 </li>
                                 <li class="sidebar-list"><a
                                         class="sidebar-link sidebar-title @if (Route::is('home')) thisMenu @endif"
-                                        href=""><i data-feather="file-text"></i><span>Report
+                                        href="{{ route('home') }}"><i data-feather="file-text"></i><span>Dashboard
                                         </span></a></li>
                                 <li class="sidebar-list"><a
                                         class="sidebar-link sidebar-title @if (Route::is('histories.*')) thisMenu @endif"
-                                        href="{{ route('histories.index')}}">
+                                        href="{{ route('histories.index') }}">
                                         <i data-feather="list"></i><span>History </span></a></li>
                                 <li class="sidebar-list"><a
                                         class="sidebar-link sidebar-title @if (Route::is('holidays.*')) thisMenu @endif"
@@ -265,19 +268,20 @@
     <!-- Plugins JS start-->
     <script src="{{ asset('js/sidebar-menu.js') }}"></script>
     <script src="{{ asset('js/prism/prism.min.js') }}"></script>
-    <script src="{{ asset('js/clipboard/clipboard.min.js') }}"></script>
-    <script src="{{ asset('js/custom-card/custom-card.js') }}"></script>
-    <script src="{{ asset('js/typeahead/handlebars.js') }}"></script>
-    <script src="{{ asset('js/typeahead/typeahead.bundle.js') }}"></script>
-    <script src="{{ asset('js/typeahead/typeahead.custom.js') }}"></script>
-    <script src="{{ asset('js/typeahead-search/handlebars.js') }}"></script>
+    <script src="{{ asset('js/counter/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('js/counter/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('js/counter/counter-custom.js') }}"></script>
+    <script src="{{ asset('js/datepicker/date-picker/datepicker.js') }}"></script>
+    <script src="{{ asset('js/datepicker/date-picker/datepicker.en.js') }}"></script>
+    <script src="{{ asset('js/datepicker/date-picker/datepicker.custom.js') }}"></script>
+    <script src="{{ asset('js/owlcarousel/owl.carousel.js') }}"></script>
+    <script src="{{ asset('js/general-widget.js') }}"></script>
     <script src="{{ asset('js/tooltip-init.js') }}"></script>
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('js/script.js') }}"></script>
     @include('sweetalert::alert')
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 
     <!-- login js-->
     <!-- Plugin used-->

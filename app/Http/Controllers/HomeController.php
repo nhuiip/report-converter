@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -24,11 +26,18 @@ class HomeController extends Controller
     public function index()
     {
         $breadcrumbs = [
-            ['route' => '', 'name' => 'Report Converter'],
+            ['route' => '', 'name' => 'Dashboard'],
         ];
+        $teams = DB::table('teams')
+        ->select('id', 'name')
+        ->selectRaw("(CASE WHEN (SELECT COUNT(*) FROM team_mapping AS mapping WHERE mapping.teamId = teams.id > 0) THEN (SELECT COUNT(*) FROM team_mapping AS mapping WHERE mapping.teamId = teams.id) ELSE 0 END) as people")
+        ->whereRaw('teams.deleted_at IS NULL')
+        ->orderBy('name', 'asc')
+        ->get();
         return view('home', [
-            'title' => 'Report Converter',
-            'breadcrumbs' => $breadcrumbs
+            'title' => 'Dashboard',
+            'breadcrumbs' => $breadcrumbs,
+            'teams' => $teams
         ]);
     }
 }
